@@ -34,7 +34,7 @@ def add_hashtags(rank_one, message):
     message += '\n#'
     message += ''.join(e for e in rank_one if e.isalnum())
     for hashtag in hashtags:
-        if len(message + hashtag) < 280:
+        if len(message + hashtag) < 270:
             message += f' {hashtag}'
     return message
 
