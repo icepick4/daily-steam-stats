@@ -9,6 +9,6 @@ client = tweepy.Client(access_token=config.ACCESS_TOKEN,
                        consumer_secret=config.API_KEY_SECRET
                        )
 # Replace the text with whatever you want to Tweet about
-response = client.create_tweet(text='hello world')
+# response = client.create_tweet(text='hello world')
 
-print(response)
+# print(response)
