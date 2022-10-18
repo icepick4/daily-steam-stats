@@ -13,9 +13,11 @@ def get_games(trending):
     soup = BeautifulSoup(page, 'html.parser')
     if trending:
         games = soup.select('table#trending-recent tbody tr')
+        games = games[:3]
     else:
         games = soup.select('table#top-games tbody tr')
-    games = games[:5]
+        games = games[:5]
+
     games_dict = {}
     ctr = 0
     for game in games:
