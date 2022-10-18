@@ -1,6 +1,5 @@
 """create a message for a tweet"""
-hashtags = ['#SteamTop3', '#Gaming', '#Trending',
-            '#SteamCharts', '#Stats', '#VideoGames', '#VR', '#Gamer', 'News']
+from constants import hashtags
 
 
 def create_message_top_games(games):
@@ -37,8 +36,6 @@ def add_hashtags(rank_one, message):
     for hashtag in hashtags:
         if len(message + hashtag) < 280:
             message += f' {hashtag}'
-        else:
-            break
     return message
 
 

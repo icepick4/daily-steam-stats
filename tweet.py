@@ -29,6 +29,5 @@ def tweet(message, images, api, debug=False):
         for filename in filenames:
             res = api.media_upload(filename)
             media_ids.append(res.media_id)
-
         api.update_status(media_ids=media_ids, status=message)
     print(f'Tweeted: {message}')
