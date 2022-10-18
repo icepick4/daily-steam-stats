@@ -19,8 +19,7 @@ def get_games(trending):
         games = games[:5]
 
     games_dict = {}
-    ctr = 0
-    for game in games:
+    for ctr, game in enumerate(games):
         name = game.select('a')[0].text
         name = name.replace('\t', '')
         name = name.replace('\n', '')
@@ -45,7 +44,6 @@ def get_games(trending):
                 'image': image,
                 'rank': rank
             }
-        ctr += 1
     return games_dict
 
 
@@ -54,6 +52,4 @@ def get_image(image_page):
     image_page = requests.get(
         image_page, headers={'User-Agent': 'Mozilla/5.0'}).content
     image_soup = BeautifulSoup(image_page, 'html.parser')
-    image = 'https://steamcharts.com' + \
-        image_soup.select('img.app-image')[0]['src']
-    return image
+    return 'https://steamcharts.com' + image_soup.select('img.app-image')[0]['src']
