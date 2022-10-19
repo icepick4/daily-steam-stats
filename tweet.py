@@ -88,5 +88,8 @@ def init_tweet_top(debug):
     images = [item[1]['image'] for item in games.items()]
     images = images[:4]
     message = create_message_top_games(games)
+    main_message = message[0]
     links = [item[1]['steam_link'] for item in games.items()]
-    tweet([message[0], create_reply_message(message[1])[0], links], images, debug)
+    links = create_links_message(links, message[1])[0]
+    reply = create_reply_message(message[1])[0]
+    tweet([main_message, links, reply], images, debug)

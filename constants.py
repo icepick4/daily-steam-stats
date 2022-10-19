@@ -13,5 +13,4 @@ hashtags = ['#SteamTop', '#Gaming', '#Trending',
             '#playstation', '#pc', '#twitch', '#esports', '#gamingcommunity',
             '#gamer']
 
-LOGO_IMAGE = 'https://github.com/icepick4/daily-steam-stats/blob/'\
-    '77a358d594c053e491c7a26a76d6ff1e5611165b/steam-logo.png?raw=true'
+LOGO_IMAGE = 'https://raw.githubusercontent.com/icepick4/daily-steam-stats/main/steam-logo.png'

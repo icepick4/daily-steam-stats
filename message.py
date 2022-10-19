@@ -47,11 +47,13 @@ def add_hashtags(games, message):
     message += '\n'
     # add hashtags for each game name
     for game in games:
-        message += ' #'
-        message += ''.join(e for e in game if e.isalnum())
+        game = ''.join(e for e in game if e.isalnum())
+        if len(message) + len(game) < 270:
+            message += ' #'
+            message += game
     for _ in range(len(hashtags)):
         hashtag = random.choice(hashtags)
-        if len(message + hashtag) < 270:
+        if len(message) + len(hashtag) < 270:
             message += f' {hashtag}'
     # return the main message and the games names
     return message, games
