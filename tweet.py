@@ -1,19 +1,28 @@
 """tweet a text and an image"""
 import os
 import shutil
+import sys
 from pathlib import Path
 
 import requests
 import tweepy
 
-import config
+try:
+    import config
+except ImportError:
+    print('Please create a config.py file with your Twitter API keys.')
+    sys.exit()
 from constants import LOGO_IMAGE
 from message import create_message_top_games, create_message_trending_games
 from scrape import get_games
 
-auth = tweepy.OAuthHandler(config.API_KEY, config.API_KEY_SECRET)
-auth.set_access_token(config.ACCESS_TOKEN, config.ACCESS_TOKEN_SECRET)
-api = tweepy.API(auth)
+try:
+    auth = tweepy.OAuthHandler(config.API_KEY, config.API_KEY_SECRET)
+    auth.set_access_token(config.ACCESS_TOKEN, config.ACCESS_TOKEN_SECRET)
+    api = tweepy.API(auth)
+except tweepy.TweepyException:
+    print('Failed to authenticate with Twitter.')
+    sys.exit()
 
 
 def tweet(message, images, debug=False):
