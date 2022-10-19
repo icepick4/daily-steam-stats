@@ -52,4 +52,13 @@ def get_image(image_page):
     image_page = requests.get(
         image_page, headers={'User-Agent': 'Mozilla/5.0'}).content
     image_soup = BeautifulSoup(image_page, 'html.parser')
-    return 'https://steamcharts.com' + image_soup.select('img.app-image')[0]['src']
+    steam_link = image_soup.select('div#app-links a')[0]['href']
+    steam_soup = BeautifulSoup(requests.get(
+        steam_link, headers={'User-Agent': 'Mozilla/5.0'}).content, 'html.parser')
+    image = steam_soup.select('img')
+    steam_link_reference = 'https://cdn.akamai.steamstatic.com/steam/apps/'
+    for img in image:
+        verify = 'header' in img['src'] and '.jpg' in img['src']
+        if img['src'].startswith(steam_link_reference) and verify:
+            return img['src']
+    return None
