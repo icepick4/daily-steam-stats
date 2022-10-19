@@ -4,7 +4,7 @@ from constants import hashtags
 
 def create_message_top_games(games):
     """Create a message for a tweet."""
-    message = 'Top 5 #games on #Steam today \U0001F3C6\n\n'
+    message = 'Top 5 #games on #Steam now \U0001F3C6\n\n'
     rank_one = ''
     for ctr, item in enumerate(games.items()):
         rank = get_rank(item[1]['rank'])
@@ -17,7 +17,7 @@ def create_message_top_games(games):
 
 def create_message_trending_games(games):
     """Create a message for a tweet."""
-    message = 'Top 3 trending #games on #Steam today \U0001F3C6\n\n'
+    message = 'Top 3 trending #games on #Steam now \U0001F3C6\n\n'
     rank_one = ''
     for ctr, item in enumerate(games.items()):
         rank = get_rank(item[1]['rank'])
@@ -25,7 +25,6 @@ def create_message_trending_games(games):
             rank_one = item[0]
         message += ((f'{rank} {item[0]} (Evolution: ' +
                     item[1]['evolution']) + '\U0001f4c8') + ')\n'
-
     return add_hashtags(rank_one, message)
 
 

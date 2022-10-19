@@ -3,13 +3,13 @@
 import requests
 from bs4 import BeautifulSoup
 
-from constants import URL
+from constants import LOGO_IMAGE, URL
 
 
 def get_games(trending):
     """Get the trending games from the Steam store."""
     page = requests.get(URL, headers={
-                        'User-Agent': 'Mozilla/5.0'}).content
+                        'User-Agent': 'Mozilla/5.0'}, timeout=3).content
     soup = BeautifulSoup(page, 'html.parser')
     if trending:
         games = soup.select('table#trending-recent tbody tr')
@@ -50,15 +50,15 @@ def get_games(trending):
 def get_image(image_page):
     """Get the image of a game."""
     image_page = requests.get(
-        image_page, headers={'User-Agent': 'Mozilla/5.0'}).content
+        image_page, headers={'User-Agent': 'Mozilla/5.0'}, timeout=3).content
     image_soup = BeautifulSoup(image_page, 'html.parser')
     steam_link = image_soup.select('div#app-links a')[0]['href']
     steam_soup = BeautifulSoup(requests.get(
-        steam_link, headers={'User-Agent': 'Mozilla/5.0'}).content, 'html.parser')
+        steam_link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=3).content, 'html.parser')
     image = steam_soup.select('img')
     steam_link_reference = 'https://cdn.akamai.steamstatic.com/steam/apps/'
     for img in image:
         verify = 'header' in img['src'] and '.jpg' in img['src']
         if img['src'].startswith(steam_link_reference) and verify:
             return img['src']
-    return None
+    return LOGO_IMAGE
