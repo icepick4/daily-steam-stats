@@ -1,14 +1,14 @@
 """main file"""
 
-from tweet import init_tweet_top
+from tweet import init_tweet_trending
 
 
 def main():
     """main function"""
     # tweet the trending games
-    # init_tweet_trending()
+    init_tweet_trending(True)
     # tweet the top games
-    init_tweet_top()
+    # init_tweet_top(True)
 
 
 if __name__ == '__main__':

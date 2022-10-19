@@ -13,7 +13,8 @@ except ImportError:
     print('Please create a config.py file with your Twitter API keys.')
     sys.exit()
 from constants import LOGO_IMAGE
-from message import create_message_top_games, create_message_trending_games
+from message import (create_links_message, create_message_top_games,
+                     create_message_trending_games, create_reply_message)
 from scrape import get_games
 
 try:
@@ -25,13 +26,16 @@ except tweepy.TweepyException:
     sys.exit()
 
 
-def tweet(message, images, debug=False):
-    """Tweet a message and some image."""
+def tweet(messages, images, debug=False):
+    """Tweet a message and some image.
+        message[0] : main message
+        message[1] : links to games
+        message[2] : reply message
+    """
     filenames = []
     folder = './assets/'
-    dir_path = Path(folder)
     try:
-        shutil.rmtree(dir_path)
+        shutil.rmtree(Path(folder))
         os.mkdir(folder)
     except OSError as error:
         print(f'Failed to delete {folder}. Reason: {error}')
@@ -48,25 +52,41 @@ def tweet(message, images, debug=False):
         for filename in filenames:
             res = api.media_upload(filename)
             media_ids.append(res.media_id)
-        reponse = api.update_status(media_ids=media_ids, status=message)
+        reponse = api.update_status(media_ids=media_ids, status=messages[0])
         api.create_favorite(reponse.id)
-    print(f'Tweeted: {message}')
+        reponse = api.update_status(in_reply_to_status_id=reponse.id,
+                                    status=messages[1])
+        api.create_favorite(reponse.id)
+        reponse = api.update_status(in_reply_to_status_id=reponse.id,
+                                    status=messages[2])
+        api.create_favorite(reponse.id)
+    print(f'Tweeted: {messages[0]}\n')
+    print(f'Replied: {messages[1]}\n')
+    print(f'Links: {messages[2]}')
 
 
-def init_tweet_trending():
+def init_tweet_trending(debug):
     """initiate tweet"""
     games = get_games(True)
     images = [item[1]['image'] for item in games.items()]
     images = images[:3]
     images.append(LOGO_IMAGE)
+    # message[0] : main message
+    # message[1] : games names
     message = create_message_trending_games(games)
-    tweet(message, images, True)
+    main_message = message[0]
+    links = [item[1]['steam_link'] for item in games.items()]
+    # use the games names in message[1] to create reply message and links
+    links = create_links_message(links, message[1])[0]
+    reply = create_reply_message(message[1])[0]
+    tweet([main_message, links, reply], images, debug)
 
 
-def init_tweet_top():
+def init_tweet_top(debug):
     """initiate tweet"""
     games = get_games(False)
     images = [item[1]['image'] for item in games.items()]
     images = images[:4]
     message = create_message_top_games(games)
-    tweet(message, images, True)
+    links = [item[1]['steam_link'] for item in games.items()]
+    tweet([message[0], create_reply_message(message[1])[0], links], images, debug)
