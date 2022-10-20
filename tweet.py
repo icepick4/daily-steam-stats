@@ -58,7 +58,7 @@ def tweet(messages, images, debug=False):
         # api.create_favorite(response.id)
     for message in messages:
         for msg in message:
-            print(f'Tweeting: \n')
+            print(f'Tweeting: {msg}\n')
             # response = api.update_status(
             #     status=msg, in_reply_to_status_id=response.id)
             # api.create_favorite(response.id)
