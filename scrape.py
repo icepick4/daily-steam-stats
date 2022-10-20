@@ -16,7 +16,7 @@ def get_games(trending):
         games = games[:3]
     else:
         games = soup.select('table#top-games tbody tr')
-        games = games[:5]
+        games = games[:20]
 
     games_dict = {}
     for ctr, game in enumerate(games):

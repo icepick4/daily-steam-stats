@@ -14,7 +14,8 @@ except ImportError:
     sys.exit()
 from constants import LOGO_IMAGE
 from message import (create_links_message, create_message_top_games,
-                     create_message_trending_games, create_reply_message)
+                     create_message_trending_games, create_reply_message,
+                     cut_message)
 from scrape import get_games
 
 try:
@@ -52,17 +53,17 @@ def tweet(messages, images, debug=False):
         for filename in filenames:
             res = api.media_upload(filename)
             media_ids.append(res.media_id)
-        reponse = api.update_status(media_ids=media_ids, status=messages[0])
-        api.create_favorite(reponse.id)
-        reponse = api.update_status(in_reply_to_status_id=reponse.id,
-                                    status=messages[1])
-        api.create_favorite(reponse.id)
-        reponse = api.update_status(in_reply_to_status_id=reponse.id,
-                                    status=messages[2])
-        api.create_favorite(reponse.id)
+        response = api.update_status(media_ids=media_ids, status=messages[0])
+        api.create_favorite(response.id)
+        response = api.update_status(media_ids=media_ids, status=messages[1])
+        api.create_favorite(response.id)
+        response = api.update_status(in_reply_to_status_id=response.id,
+                                     status=messages[2])
+        api.create_favorite(response.id)
     print(f'Tweeted: {messages[0]}\n')
     print(f'Replied: {messages[1]}\n')
     print(f'Links: {messages[2]}')
+    cut_message(messages[1])
 
 
 def init_tweet_trending(debug):

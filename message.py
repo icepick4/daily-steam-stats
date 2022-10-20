@@ -1,12 +1,14 @@
 """create a message for a tweet"""
 import random
 
+import pyshorteners
+
 from constants import hashtags
 
 
 def create_message_top_games(games):
     """Create a message for a tweet."""
-    message = 'Top 5 #games on #Steam currently \U0001F3C6\n\n'
+    message = 'Top 6 #games on #Steam currently \U0001F3C6\n\n'
     games_names = []
     for item in games.items():
         rank = get_rank(item[1]['rank'])
@@ -30,15 +32,17 @@ def create_message_trending_games(games):
 
 def create_reply_message(games):
     """Create a reply message for a tweet."""
-    message = 'Games are ranked by the number of players on Steam currently.'
+    message = 'Games are ranked by the number of players on Steam currently or their evolution.'
     return add_hashtags(games, message)
 
 
 def create_links_message(links, games):
     """Create a message to display links of games"""
-    message = 'Here are the links to the #games in the #leaderboard #today \U0001F3C6\n\n'
+    message = 'Links to the games:\n'
     for i, link in enumerate(links):
-        message += f'{games[i]} : {link}\n'
+        link = pyshorteners.Shortener().tinyurl.short(link)
+        line = f'{games[i]} {link}\n'
+        message += line
     return add_hashtags(games, message)
 
 
@@ -48,13 +52,11 @@ def add_hashtags(games, message):
     # add hashtags for each game name
     for game in games:
         game = ''.join(e for e in game if e.isalnum())
-        if len(message) + len(game) < 270:
-            message += ' #'
-            message += game
+        message += ' #'
+        message += game
     for _ in range(len(hashtags)):
         hashtag = random.choice(hashtags)
-        if len(message) + len(hashtag) < 270:
-            message += f' {hashtag}'
+        message += f' {hashtag}'
     # return the main message and the games names
     return message, games
 
@@ -70,3 +72,10 @@ def get_rank(rank):
     else:
         rank = str(rank)
     return rank
+
+
+def cut_message(message):
+    """cut the message into many messages with 280 characters"""
+    messages = message.split('\n')
+    final_messages = []
+    return final_messages
