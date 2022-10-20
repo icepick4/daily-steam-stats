@@ -8,8 +8,12 @@ from constants import LOGO_IMAGE, URL
 
 def get_games(trending):
     """Get the trending games from the Steam store."""
-    page = requests.get(URL, headers={
-                        'User-Agent': 'Mozilla/5.0'}, timeout=3).content
+    try:
+        page = requests.get(URL, headers={
+                            'User-Agent': 'Mozilla/5.0'}, timeout=15).content
+    except requests.exceptions.Timeout:
+        print('Timeout error')
+        return None
     soup = BeautifulSoup(page, 'html.parser')
     if trending:
         games = soup.select('table#trending-recent tbody tr')
@@ -52,16 +56,24 @@ def get_games(trending):
 
 def get_steam_link(image_page):
     """Get the steam link of a game."""
-    image_page = requests.get(
-        image_page, headers={'User-Agent': 'Mozilla/5.0'}, timeout=3).content
+    try:
+        image_page = requests.get(
+            image_page, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15).content
+    except requests.exceptions.Timeout:
+        print('Timeout error')
+        return None
     image_soup = BeautifulSoup(image_page, 'html.parser')
     return image_soup.select('div#app-links a')[0]['href']
 
 
 def get_image(steam_link):
     """Get the image of a game."""
-    steam_soup = BeautifulSoup(requests.get(
-        steam_link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=3).content, 'html.parser')
+    try:
+        steam_soup = BeautifulSoup(requests.get(
+            steam_link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15).content, 'html.parser')
+    except requests.exceptions.Timeout:
+        print('Timeout error')
+        return None
     image = steam_soup.select('img')
     steam_link_reference = 'https://cdn.akamai.steamstatic.com/steam/apps/'
     steam_link_reference_v2 = 'https://cdn.cloudflare.steamstatic.com/steam/apps/'

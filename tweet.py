@@ -53,17 +53,16 @@ def tweet(messages, images, debug=False):
         for filename in filenames:
             res = api.media_upload(filename)
             media_ids.append(res.media_id)
-        response = api.update_status(media_ids=media_ids, status=messages[0])
-        api.create_favorite(response.id)
-        response = api.update_status(media_ids=media_ids, status=messages[1])
-        api.create_favorite(response.id)
-        response = api.update_status(in_reply_to_status_id=response.id,
-                                     status=messages[2])
-        api.create_favorite(response.id)
-    print(f'Tweeted: {messages[0]}\n')
-    print(f'Replied: {messages[1]}\n')
-    print(f'Links: {messages[2]}')
-    cut_message(messages[0])
+        # response = api.update_status(
+        #     media_ids=media_ids, status=messages[0][0].pop(0))
+        # api.create_favorite(response.id)
+    for message in messages:
+        for msg in message:
+            print(f'Tweeting: {msg}')
+            # response = api.update_status(
+            #     status=msg, in_reply_to_status_id=response.id)
+            # api.create_favorite(response.id)
+    # cut_message(messages[0])
     # cut_message(messages[1])
 
 
@@ -94,4 +93,5 @@ def init_tweet_top(debug):
     links = [item[1]['steam_link'] for item in games.items()]
     links = create_links_message(links, message[1])[0]
     reply = create_reply_message(message[1])[0]
-    tweet([main_message, links, reply], images, debug)
+    tweet([cut_message(main_message), cut_message(
+        links), cut_message(reply)], images, debug)
