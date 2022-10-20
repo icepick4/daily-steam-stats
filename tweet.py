@@ -63,7 +63,8 @@ def tweet(messages, images, debug=False):
     print(f'Tweeted: {messages[0]}\n')
     print(f'Replied: {messages[1]}\n')
     print(f'Links: {messages[2]}')
-    cut_message(messages[1])
+    cut_message(messages[0])
+    # cut_message(messages[1])
 
 
 def init_tweet_trending(debug):

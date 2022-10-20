@@ -78,4 +78,12 @@ def cut_message(message):
     """cut the message into many messages with 280 characters"""
     messages = message.split('\n')
     final_messages = []
+    while messages != []:
+        message = ''
+        while len(message) < 280 and messages != []:
+            message += messages[0] + '\n'
+            messages.pop(0)
+        final_messages.append(message)
+    for mess in final_messages:
+        print(mess)
     return final_messages
