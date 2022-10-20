@@ -1,3 +1,4 @@
 requests
 tweepy
 bs4
+emoji

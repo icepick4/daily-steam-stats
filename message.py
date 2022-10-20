@@ -3,12 +3,12 @@ import random
 
 import pyshorteners
 
-from constants import hashtags
+from constants import CHART_INCREASING, NUMBERS, TROPHY, hashtags
 
 
 def create_message_top_games(games):
     """Create a message for a tweet."""
-    message = 'Top 10 #games on #Steam currently \U0001F3C6\n\n'
+    message = f'Top 10 #games on #Steam currently {TROPHY}\n\n'
     games_names = []
     for item in games.items():
         rank = get_rank(item[1]['rank'])
@@ -20,20 +20,20 @@ def create_message_top_games(games):
 
 def create_message_trending_games(games):
     """Create a message for a tweet."""
-    message = 'Top 3 trending #games on #Steam currently \U0001F3C6\n\n'
+    message = f'Top 3 trending #games on #Steam currently {TROPHY}\n\n'
     games_names = []
     for item in games.items():
         rank = get_rank(item[1]['rank'])
         games_names.append(item[0])
         message += ((f'{rank} {item[0]} (Evolution: ' +
-                    item[1]['evolution']) + '\U0001f4c8') + ')\n'
+                    item[1]['evolution']) + {CHART_INCREASING}) + ')\n'
     return add_hashtags(games_names, message, True)
 
 
 def create_reply_message(games):
     """Create a reply message for a tweet."""
     message = 'Games are ranked by the number of players'\
-    'on Steam currently or their evolution in the lasts 24 hours.\n\n'
+        'on Steam currently or their evolution in the lasts 24 hours.\n\n'
     return add_hashtags(games, message, False)
 
 
@@ -73,7 +73,7 @@ def get_rank(rank):
     elif rank == 3:
         rank = "\U0001F949"
     else:
-        rank = str(rank)
+        rank = NUMBERS[rank]
     return rank
 
 
@@ -83,8 +83,11 @@ def cut_message(message):
     final_messages = []
     while messages != []:
         message = ''
-        while len(message) < 270 and messages != []:
+        while len(message) + len(messages[0]) < 270:
+            print(len(message) + len(messages[0]))
             message += messages[0] + '\n'
             messages.pop(0)
+            if messages == []:
+                break
         final_messages.append(message)
     return final_messages

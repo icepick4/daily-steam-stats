@@ -58,17 +58,17 @@ def tweet(messages, images, debug=False):
         # api.create_favorite(response.id)
     for message in messages:
         for msg in message:
-            print(f'Tweeting: {msg}')
+            print(f'Tweeting: \n')
             # response = api.update_status(
             #     status=msg, in_reply_to_status_id=response.id)
             # api.create_favorite(response.id)
-    # cut_message(messages[0])
-    # cut_message(messages[1])
 
 
 def init_tweet_trending(debug):
     """initiate tweet"""
     games = get_games(True)
+    if games is None:
+        return
     images = [item[1]['image'] for item in games.items()]
     images = images[:3]
     images.append(LOGO_IMAGE)
@@ -86,6 +86,8 @@ def init_tweet_trending(debug):
 def init_tweet_top(debug):
     """initiate tweet"""
     games = get_games(False)
+    if games is None:
+        return
     images = [item[1]['image'] for item in games.items()]
     images = images[:4]
     message = create_message_top_games(games)
