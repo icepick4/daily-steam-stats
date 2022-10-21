@@ -53,15 +53,20 @@ def tweet(messages, images, debug=False):
         for filename in filenames:
             res = api.media_upload(filename)
             media_ids.append(res.media_id)
-        # response = api.update_status(
-        #     media_ids=media_ids, status=messages[0][0].pop(0))
-        # api.create_favorite(response.id)
-    for message in messages:
-        for msg in message:
-            print(f'Tweeting: {msg}\n')
-            # response = api.update_status(
-            #     status=msg, in_reply_to_status_id=response.id)
-            # api.create_favorite(response.id)
+        response = api.update_status(
+            media_ids=media_ids, status=messages[0][0])
+        print(f'Tweeting: {messages[0][0]}')
+        messages[0].pop(0)
+        api.create_favorite(response.id)
+        for message in messages:
+            for msg in message:
+                # check is its the last message
+                if msg == message[-1] and message == messages[-1]:
+                    msg = msg[:len(msg) - 2]
+                print(f'Tweeting: {msg}\n')
+                response = api.update_status(
+                    status=msg, in_reply_to_status_id=response.id)
+                api.create_favorite(response.id)
 
 
 def init_tweet_trending(debug):
@@ -79,7 +84,7 @@ def init_tweet_trending(debug):
     links = [item[1]['steam_link'] for item in games.items()]
     # use the games names in message[1] to create reply message and links
     links = create_links_message(links, message[1])[0]
-    reply = create_reply_message(message[1])[0]
+    reply = create_reply_message()[0]
     tweet([main_message, links, reply], images, debug)
 
 
@@ -94,6 +99,6 @@ def init_tweet_top(debug):
     main_message = message[0]
     links = [item[1]['steam_link'] for item in games.items()]
     links = create_links_message(links, message[1])[0]
-    reply = create_reply_message(message[1])[0]
+    reply = create_reply_message()[0]
     tweet([cut_message(main_message), cut_message(
         links), cut_message(reply)], images, debug)

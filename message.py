@@ -3,7 +3,7 @@ import random
 
 import pyshorteners
 
-from constants import CHART_INCREASING, NUMBERS, TROPHY, hashtags
+from constants import ARROW, CHART_INCREASING, NUMBERS, TROPHY, hashtags
 
 
 def create_message_top_games(games):
@@ -14,7 +14,7 @@ def create_message_top_games(games):
         rank = get_rank(item[1]['rank'])
         games_names.append(item[0])
         message += ((f'{rank}-{item[0]} (Peak: ' +
-                    item[1]['peak_players']) + ')\n')
+                    item[1]['peak_players']) + ')\n\n')
     return add_hashtags(games_names, message, True)
 
 
@@ -26,25 +26,25 @@ def create_message_trending_games(games):
         rank = get_rank(item[1]['rank'])
         games_names.append(item[0])
         message += ((f'{rank} {item[0]} (Evolution: ' +
-                    item[1]['evolution']) + {CHART_INCREASING}) + ')\n'
+                    item[1]['evolution']) + {CHART_INCREASING}) + ')\n\n'
     return add_hashtags(games_names, message, True)
 
 
-def create_reply_message(games):
+def create_reply_message():
     """Create a reply message for a tweet."""
-    message = 'Games are ranked by the number of players'\
-        'on Steam currently or their evolution in the lasts 24 hours.\n\n'
-    return add_hashtags(games, message, False)
+    message = '#Games are ranked by the number of #players'\
+        'on #Steam currently or their #evolution in the lasts 24 hours.\n\n'
+    return add_hashtags([], message, False)
 
 
 def create_links_message(links, games):
     """Create a message to display links of games"""
-    message = 'Links of the #games in the #leaderboard #today\n'
+    message = f'Links of the #games in the #leaderboard #today {TROPHY}\n\n'
     for i, link in enumerate(links):
         link = pyshorteners.Shortener().tinyurl.short(link)
         line = f'{games[i]} {link}\n'
         message += line
-    return add_hashtags(games, message, True)
+    return add_hashtags([], message, True)
 
 
 def add_hashtags(games, message, only_games):
@@ -57,9 +57,11 @@ def add_hashtags(games, message, only_games):
         message += game
     if only_games:
         return message, games
-    for _ in range(len(hashtags)):
+    for i in range(len(hashtags)):
         hashtag = random.choice(hashtags)
         message += f' {hashtag}'
+        if i % 5 == 0:
+            message += '\n'
     # return the main message and the games names
     return message, games
 
@@ -84,10 +86,10 @@ def cut_message(message):
     while messages != []:
         message = ''
         while len(message) + len(messages[0]) < 270:
-            print(len(message) + len(messages[0]))
             message += messages[0] + '\n'
             messages.pop(0)
             if messages == []:
                 break
+        message += ARROW
         final_messages.append(message)
     return final_messages

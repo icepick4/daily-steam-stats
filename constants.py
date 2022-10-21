@@ -20,3 +20,4 @@ LOGO_IMAGE = 'https://raw.githubusercontent.com/icepick4/daily-steam-stats/main/
 CHART_INCREASING = emoji.emojize(':chart_increasing:')
 TROPHY = emoji.emojize(':trophy:')
 NUMBERS = [emoji.emojize(f':keycap_{i}:') for i in range(11)]
+ARROW = emoji.emojize(':down_arrow:')
