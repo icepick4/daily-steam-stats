@@ -1,4 +1,5 @@
 """scrape steam top 100 games"""
+import sys
 
 import requests
 from bs4 import BeautifulSoup
@@ -13,11 +14,14 @@ def get_games(trending):
                             'User-Agent': 'Mozilla/5.0'}, timeout=15).content
     except requests.exceptions.Timeout:
         print('Timeout error')
-        return None
+        sys.exit()
+    except requests.exceptions.ConnectionError:
+        print('Connection error')
+        sys.exit()
     soup = BeautifulSoup(page, 'html.parser')
     if trending:
         games = soup.select('table#trending-recent tbody tr')
-        games = games[:3]
+        games = games[:5]
     else:
         games = soup.select('table#top-games tbody tr')
         games = games[:20]
