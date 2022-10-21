@@ -7,6 +7,8 @@ from pathlib import Path
 import requests
 import tweepy
 
+from constants import IDEAS_MESSAGE
+
 try:
     import config
 except ImportError:
@@ -51,6 +53,8 @@ def tweet(messages, images, debug=False):
             # check is its the last message
             if msg == message[-1] and message == messages[-1]:
                 msg = msg[:len(msg) - 2]
+                if len(msg) + len(IDEAS_MESSAGE) < 275:
+                    msg += IDEAS_MESSAGE
             print(f'Tweeting: {msg}\n')
             if not debug:
                 response = api.update_status(
