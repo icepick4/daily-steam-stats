@@ -32,21 +32,7 @@ def tweet(messages, images, debug=False):
         message[1] : links to games
         message[2] : reply message
     """
-    filenames = []
-    folder = './assets/'
-    try:
-        shutil.rmtree(Path(folder))
-        os.mkdir(folder)
-    except OSError as error:
-        print(f'Failed to delete {folder}. Reason: {error}')
-
-    for i, image in enumerate(images):
-        req = requests.get(image, allow_redirects=True, timeout=15)
-        filename = f'{folder}tmp{str(i + 1)}.png'
-        filenames.append(filename)
-        with open(filename, 'wb') as file:
-            file.write(req.content)
-
+    filenames = download_images(images)
     if not debug:
         media_ids = []
         for filename in filenames:
@@ -60,27 +46,16 @@ def tweet(messages, images, debug=False):
         else:
             messages.pop(0)
         api.create_favorite(response.id)
-        for message in messages:
-            for msg in message:
-                # check is its the last message
-                if msg == message[-1] and message == messages[-1]:
-                    msg = msg[:len(msg) - 2]
-                print(f'Tweeting: {msg}\n')
+    for message in messages:
+        for msg in message:
+            # check is its the last message
+            if msg == message[-1] and message == messages[-1]:
+                msg = msg[:len(msg) - 2]
+            print(f'Tweeting: {msg}\n')
+            if not debug:
                 response = api.update_status(
                     status=msg, in_reply_to_status_id=response.id)
                 api.create_favorite(response.id)
-    else:
-        print(f'Tweeting: {messages[0][0]}')
-        if isinstance(messages[0], list):
-            messages[0].pop(0)
-        else:
-            messages.pop(0)
-        for message in messages:
-            for msg in message:
-                # check is its the last message
-                if msg == message[-1] and message == messages[-1]:
-                    msg = msg[:len(msg) - 2]
-                print(f'Tweeting: {msg}\n')
 
 
 def init_tweet_trending(debug):
@@ -111,3 +86,22 @@ def global_init(games, message, debug):
     reply = create_reply_message(message[1], 'top')[0]
     tweet([cut_message(main_message), cut_message(
         links), cut_message(reply)], images, debug)
+
+
+def download_images(images):
+    """download images"""
+    filenames = []
+    folder = './assets/'
+    try:
+        shutil.rmtree(Path(folder))
+        os.mkdir(folder)
+    except OSError as error:
+        print(f'Failed to delete {folder}. Reason: {error}')
+
+    for i, image in enumerate(images):
+        req = requests.get(image, allow_redirects=True, timeout=15)
+        filename = f'{folder}tmp{str(i + 1)}.png'
+        filenames.append(filename)
+        with open(filename, 'wb') as file:
+            file.write(req.content)
+    return filenames
