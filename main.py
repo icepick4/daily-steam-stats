@@ -5,7 +5,7 @@ from tweet import init_tweet_top
 def main():
     """main function"""
     # tweet the trending games
-    # init_tweet_trending(False)
+    # init_tweet_trending(True)
     # tweet the top games
     init_tweet_top(True)
 
