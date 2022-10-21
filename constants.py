@@ -3,7 +3,7 @@ import emoji
 
 URL = 'https://steamcharts.com/'
 
-hashtags = ['#SteamTop', '#Gaming', '#Trending',
+HASHTAGS = ['#SteamTop', '#Gaming', '#Trending',
             '#SteamCharts', '#Stats', '#VideoGames',
             '#VR', '#Gamer', '#News', '#SteamTopGames',
             '#SteamTrendingGames', '#Steam', '#Leaderboard',

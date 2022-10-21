@@ -3,8 +3,8 @@ import random
 
 import pyshorteners
 
-from constants import (ARROW, CHART_INCREASING, NUMBERS, REPLY_MESSAGE_TOP,
-                       REPLY_MESSAGE_TRENDING, TROPHY, hashtags)
+from constants import (ARROW, CHART_INCREASING, HASHTAGS, NUMBERS,
+                       REPLY_MESSAGE_TOP, REPLY_MESSAGE_TRENDING, TROPHY)
 
 
 def create_message_top_games(games):
@@ -16,6 +16,7 @@ def create_message_top_games(games):
         games_names.append(item[0])
         peak = item[1]['peak_players']
         message += ((f'{rank}-{item[0]} (Peak: {peak})\n'))
+        message += '#' + ''.join(e for e in item[0] if e.isalnum()) + '\n'
     return add_hashtags(message, games_names)
 
 
@@ -52,10 +53,12 @@ def create_links_message(links, games):
 def add_hashtags(message, games):
     """add hashtags to the message"""
     message += '\n'
-    for i in range(1, len(hashtags) // 4):
-        hashtag = random.choice(hashtags)
+    hashtag = ''
+    for i in range(1, len(HASHTAGS) // 4):
+        while hashtag in message:
+            hashtag = random.choice(HASHTAGS)
         message += f'{hashtag} '
-        if i % 4 == 0:
+        if i % 2 == 0:
             message += '\n'
     # return the main message and the games names
     return message, games
@@ -85,6 +88,8 @@ def cut_message(message):
             messages.pop(0)
             if messages == []:
                 break
+        if message[-2] != '\n':
+            message += '\n'
         message += ARROW
         final_messages.append(message)
     return final_messages
