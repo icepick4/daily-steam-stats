@@ -1,8 +1,8 @@
 # daily-steam-stats
 
 
-<img src="https://img.shields.io/twitter/follow/DailySteamStats?label=Follow%20my%20bot%20%21%20%40DailySteamStats&style=for-the-badge" width="275"  align="right">
-<img src="https://img.shields.io/github/followers/icepick4?label=Follow%20me%20on%20GitHub%20%21%20@icepick4&style=for-the-badge" width="275"  align="right">
+<img src="https://img.shields.io/twitter/follow/DailySteamStats?label=Follow%20my%20bot%20%21%20%40DailySteamStats&style=for-the-badge" width="275">
+<img src="https://img.shields.io/github/followers/icepick4?label=Follow%20me%20on%20GitHub%20%21%20@icepick4&style=for-the-badge" width="275">
 <img src="https://img.shields.io/github/last-commit/icepick4/daily-steam-stats?style=for-the-badge" width="275">
 <img src="https://forthebadge.com/images/badges/made-with-python.svg" width="225">
 <img src="https://user-images.githubusercontent.com/82316285/197398864-cff7ae60-efdb-4858-ab13-54a861ed0dd1.svg" width="225">
