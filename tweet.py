@@ -97,11 +97,17 @@ def download_images(images):
         os.mkdir(folder)
     except OSError as error:
         print(f'Failed to delete {folder}. Reason: {error}')
+        print('Create a folder named "assets" in the root directory.')
+        sys.exit()
 
     for i, image in enumerate(images):
         req = requests.get(image, allow_redirects=True, timeout=15)
         filename = f'{folder}tmp{str(i + 1)}.png'
         filenames.append(filename)
-        with open(filename, 'wb') as file:
-            file.write(req.content)
+        try:
+            with open(filename, 'wb') as file:
+                file.write(req.content)
+        except FileNotFoundError:
+            print('Create a folder named "assets" in the root directory.')
+            sys.exit()
     return filenames
