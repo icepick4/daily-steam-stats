@@ -18,6 +18,9 @@ def get_games(trending):
     except requests.exceptions.ConnectionError:
         print('Connection error')
         sys.exit()
+    except requests.exceptions.HTTPError:
+        print('HTTP error')
+        sys.exit()
     soup = BeautifulSoup(page, 'html.parser')
     if trending:
         games = soup.select('table#trending-recent tbody tr')
@@ -65,7 +68,13 @@ def get_steam_link(image_page):
             image_page, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15).content
     except requests.exceptions.Timeout:
         print('Timeout error')
-        return None
+        sys.exit()
+    except requests.exceptions.ConnectionError:
+        print('Connection error')
+        sys.exit()
+    except requests.exceptions.HTTPError:
+        print('HTTP error')
+        sys.exit()
     image_soup = BeautifulSoup(image_page, 'html.parser')
     return image_soup.select('div#app-links a')[0]['href']
 
@@ -77,7 +86,13 @@ def get_image(steam_link):
             steam_link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15).content, 'html.parser')
     except requests.exceptions.Timeout:
         print('Timeout error')
-        return None
+        sys.exit()
+    except requests.exceptions.ConnectionError:
+        print('Connection error')
+        sys.exit()
+    except requests.exceptions.HTTPError:
+        print('HTTP error')
+        sys.exit()
     image = steam_soup.select('img')
     steam_link_reference = 'https://cdn.akamai.steamstatic.com/steam/apps/'
     steam_link_reference_v2 = 'https://cdn.cloudflare.steamstatic.com/steam/apps/'
