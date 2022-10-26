@@ -4,13 +4,14 @@ import time
 from tweet import init_tweet_top, init_tweet_trending
 
 
-def main(mannual):
+def main(manual):
     """main function"""
-    if mannual:
+    if manual:
+        input('Press enter to tweet the trending games')
         # tweet the trending games
         init_tweet_trending(False)
         # tweet the top games
-        time.sleep(60)
+        input('Press enter to tweet the top games')
         init_tweet_top(False)
     else:
         while True:
@@ -18,6 +19,7 @@ def main(mannual):
             init_tweet_trending(False)
             time.sleep(60 * 5)
             init_tweet_top(False)
+            print('Waiting for next tweet...')
             time.sleep(10800)
 
 
