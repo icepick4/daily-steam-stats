@@ -18,6 +18,7 @@ def create_message_top_games(games):
         games_names.append(item[0])
         peak = item[1]['peak_players']
         message += ((f'{rank}-{item[0]} (Peak today: {peak} {PERSON})\n'))
+        # add a hashtag for each game (without spaces and special characters)
         message += '#' + ''.join(e for e in item[0] if e.isalnum()) + '\n'
     return add_hashtags(message, games_names)
 
@@ -32,6 +33,7 @@ def create_message_trending_games(games):
         games_names.append(item[0])
         message += (
             (f'{rank} {item[0]} (Evolution today: {evolution} {CHART_INCREASING})\n'))
+        # add a hashtag for each game (without spaces and special characters)
         message += '#' + ''.join(e for e in item[0] if e.isalnum()) + '\n'
     return add_hashtags(message, games_names)
 
@@ -65,13 +67,13 @@ def add_hashtags(message, games):
         message += f'{hashtag} '
         if i % 2 == 0:
             message += '\n'
-    # return the main message and the games names
     message += '\n' + END_MESSAGE
+    # return the main message and the games names
     return message, games
 
 
 def get_rank(rank):
-    """getting the rank of the game"""
+    """getting the rank of the game in emojis"""
     if rank == 1:
         rank = "\U0001F947"
     elif rank == 2:
@@ -89,6 +91,7 @@ def cut_message(message):
     final_messages = []
     while messages != []:
         message = ''
+        # cut messages into 280 characters messages
         while len(message) + len(messages[0]) < 270:
             message += messages[0] + '\n'
             messages.pop(0)
@@ -98,4 +101,5 @@ def cut_message(message):
             message += '\n'
         message += DOWN_ARROW
         final_messages.append(message)
+    # final messages contains messages cut into 280 characters
     return final_messages

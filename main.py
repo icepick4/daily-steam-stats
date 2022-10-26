@@ -23,6 +23,7 @@ def main(mannual):
 
 if __name__ == '__main__':
     OPTION = ''
+    # you can choose to tweet mannually or automatically
     while OPTION not in ['y', 'n']:
         OPTION = input('Do you want to tweet manually (y/n)? ')
     if OPTION == 'y':

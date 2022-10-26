@@ -30,14 +30,15 @@ except tweepy.TweepyException:
 
 def tweet(messages, images, debug=False):
     """Tweet a message and some image.
-        message[0] : main message
-        message[1] : links to games
-        message[2] : reply message
+        message[0] : main message (tab)
+        message[1] : links to games (tab)
+        message[2] : reply message (tab)
     """
     filenames = download_images(images)
     if not debug:
         media_ids = []
         for filename in filenames:
+            # upload images
             res = api.media_upload(filename)
             media_ids.append(res.media_id)
         response = api.update_status(
@@ -48,9 +49,10 @@ def tweet(messages, images, debug=False):
         else:
             messages.pop(0)
         api.create_favorite(response.id)
+    # for each message category, browse all the messages (they are already cut)
     for message in messages:
         for msg in message:
-            # check is its the last message
+            # check if its the last message
             if msg == message[-1] and message == messages[-1]:
                 msg = msg[:len(msg) - 2]
                 if len(msg) + len(IDEAS_MESSAGE) < 275:
