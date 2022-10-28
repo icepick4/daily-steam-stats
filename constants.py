@@ -42,6 +42,8 @@ REPLY_MESSAGE_TRENDING = '#Games are ranked by their #evolution in the lasts '\
     f'24 hours. {CHART_INCREASING}{TROPHY}\n\n'
 REPLY_MESSAGE_TOP = '#Games are ranked by the number of #players on #Steam '\
     f'currently. {PERSON}{TROPHY}\n\n'
+REPLY_MESSAGE_PEAK = '#Games are ranked by the #peak number of #players on #Steam today'\
+    f'. {PERSON}{TROPHY}\n\n'
 
 END_MESSAGE = f'See the leaderbord {UP_ARROW}'
 IDEAS_MESSAGE = f'If you have ideas to improve the tweets let me know!{SPARKLES}'

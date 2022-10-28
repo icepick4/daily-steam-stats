@@ -1,34 +1,49 @@
 """main file"""
 import time
 
-from tweet import init_tweet_top, init_tweet_trending
+from tweet import init_tweet_peak, init_tweet_top, init_tweet_trending
 
 
-def main(manual):
+def main(manual, debug):
     """main function"""
     if manual:
-        input('Press enter to tweet the trending games')
+        response = input('Press enter to tweet the trending games, s to skip')
         # tweet the trending games
-        init_tweet_trending(False)
+        if response != 's':
+            init_tweet_trending(debug)
+        response = input('Press enter to tweet the top games, s to skip')
         # tweet the top games
-        input('Press enter to tweet the top games')
-        init_tweet_top(False)
+        if response != 's':
+            init_tweet_top(debug)
+        response = input('Press enter to tweet the peak of the day, s to skip')
+        # tweet the peak of the day
+        if response != 's':
+            init_tweet_peak(debug)
     else:
         while True:
-            # tweet every 2 hours
-            init_tweet_trending(False)
+            if time.localtime().tm_hour > 20:
+                init_tweet_peak(debug)
+                # tweet every 2 hours
+            init_tweet_trending(debug)
             time.sleep(60 * 5)
-            init_tweet_top(False)
+            init_tweet_top(debug)
             print('Waiting for next tweet...')
             time.sleep(10800)
 
 
 if __name__ == '__main__':
     OPTION = ''
+    DEBUG = ''
     # you can choose to tweet mannually or automatically
     while OPTION not in ['y', 'n']:
         OPTION = input('Do you want to tweet manually (y/n)? ')
-    if OPTION == 'y':
-        main(True)
+    while DEBUG not in ['y', 'n']:
+        DEBUG = input('Do you want to debug (y/n)? ')
+    if DEBUG == 'y':
+        DEBUG = True
     else:
-        main(False)
+        DEBUG = False
+    if OPTION == 'y':
+        main(True, DEBUG)
+    else:
+        main(False, DEBUG)
