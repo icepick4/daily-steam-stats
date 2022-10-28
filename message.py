@@ -59,7 +59,7 @@ def create_reply_message(games, tweet_type):
     """Create a reply message for a tweet."""
     if tweet_type == "trending":
         return add_hashtags(REPLY_MESSAGE_TRENDING, games)
-    elif tweet_type == "peak":
+    if tweet_type == "peak":
         return add_hashtags(REPLY_MESSAGE_PEAK, games)
     return add_hashtags(REPLY_MESSAGE_TOP, games)
 

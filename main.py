@@ -39,10 +39,7 @@ if __name__ == '__main__':
         OPTION = input('Do you want to tweet manually (y/n)? ')
     while DEBUG not in ['y', 'n']:
         DEBUG = input('Do you want to debug (y/n)? ')
-    if DEBUG == 'y':
-        DEBUG = True
-    else:
-        DEBUG = False
+    DEBUG = DEBUG == 'y'
     if OPTION == 'y':
         main(True, DEBUG)
     else:
