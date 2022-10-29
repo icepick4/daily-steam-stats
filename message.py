@@ -25,10 +25,11 @@ def create_message_top_games(games):
 
 def create_message_peak_of_the_day(games):
     """Create a message for a tweet."""
-    message = f'Peak of the day on #Steam {GLOB}{TROPHY}\n\n'
+    message = f'Peak players today on #Steam !{GLOB}{TROPHY}\n\n'
     games_names = []
     sorted_games = sorted(
         games.items(), key=lambda x: x[1]['peak_players'], reverse=True)
+    sorted_games = dict(sorted_games)
     for item in sorted_games.items():
         rank = get_rank(item[1]['rank'])
         games_names.append(item[0])
@@ -49,7 +50,7 @@ def create_message_trending_games(games):
         evolution = item[1]['evolution']
         games_names.append(item[0])
         message += (
-            (f'{rank} {item[0]} (Current evolution: {evolution} {CHART_INCREASING})\n'))
+            (f'{rank} {item[0]} (Last 24 hours : {evolution} {CHART_INCREASING})\n'))
         # add a hashtag for each game (without spaces and special characters)
         message += '#' + ''.join(e for e in item[0] if e.isalnum()) + '\n'
     return add_hashtags(message, games_names)
