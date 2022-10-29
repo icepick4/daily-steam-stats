@@ -53,7 +53,7 @@ def get_games(trending):
             peak_players = game.select('td')[4].text
             games_dict[name] = {
                 'current_players': current_players,
-                'peak_players': peak_players,
+                'peak_players': int(peak_players),
                 'image': image,
                 'rank': rank,
                 'steam_link': steam_link

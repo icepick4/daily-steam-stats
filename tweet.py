@@ -14,9 +14,9 @@ try:
 except ImportError:
     print('Please create a config.py file with your Twitter API keys.')
     sys.exit()
-from message import (create_links_message, create_message_top_games,
-                     create_message_trending_games, create_reply_message,
-                     cut_message)
+from message import (create_links_message, create_message_peak_of_the_day,
+                     create_message_top_games, create_message_trending_games,
+                     create_reply_message, cut_message)
 from scrape import get_games
 
 try:
@@ -70,6 +70,15 @@ def init_tweet_trending(debug):
     if games is None:
         return
     message = create_message_trending_games(games)
+    global_init(games, message, debug)
+
+
+def init_tweet_peak(debug):
+    """initiate tweet"""
+    games = get_games(False)
+    if games is None:
+        return
+    message = create_message_peak_of_the_day(games)
     global_init(games, message, debug)
 
 
