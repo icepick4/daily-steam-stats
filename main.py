@@ -1,4 +1,5 @@
 """main file"""
+import sys
 import time
 
 from tweet import init_tweet_peak, init_tweet_top, init_tweet_trending
@@ -21,26 +22,24 @@ def main(manual, debug):
             init_tweet_peak(debug)
     else:
         while True:
-            if time.localtime().tm_hour > 20:
+            if 19 <= time.localtime().tm_hour <= 21:
                 init_tweet_peak(debug)
                 # tweet every 2 hours
             init_tweet_trending(debug)
             time.sleep(60 * 5)
             init_tweet_top(debug)
             print('Waiting for next tweet...')
-            time.sleep(10800)
+            time.sleep(60 * 60 * 2)
 
 
 if __name__ == '__main__':
-    OPTION = ''
-    DEBUG = ''
-    # you can choose to tweet mannually or automatically
-    while OPTION not in ['y', 'n']:
-        OPTION = input('Do you want to tweet manually (y/n)? ')
-    while DEBUG not in ['y', 'n']:
-        DEBUG = input('Do you want to debug (y/n)? ')
-    DEBUG = DEBUG == 'y'
-    if OPTION == 'y':
-        main(True, DEBUG)
+    if(len(sys.argv) > 1):
+        if sys.argv[1] == '--auto':
+            main(False, False)
+        elif sys.argv[1] == '--manual':
+            main(True, False)
+        elif sys.argv[1] == '--debug':
+            main(True, True)
     else:
-        main(False, DEBUG)
+        print('Usage: python main.py --manual or --auto or --debug')
+        sys.exit()
