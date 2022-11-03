@@ -96,14 +96,14 @@ def init_tweet_top(debug):
     global_init(games, message, 'top', debug)
 
 
-def global_init(games, message, type, debug):
+def global_init(games, message, type_of_tweet, debug):
     """initiate tweet"""
     images = [item[1]['image'] for item in games.items()]
     images = images[:4]
     main_message = message[0]
     links = [item[1]['steam_link'] for item in games.items()]
     links = create_links_message(links, message[1])
-    reply = create_reply_message(message[1], type)[0]
+    reply = create_reply_message(message[1], type_of_tweet)[0]
     tweet([cut_message(main_message), cut_message(
         links), cut_message(reply)], images, debug)
 
