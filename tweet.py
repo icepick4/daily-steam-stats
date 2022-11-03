@@ -80,6 +80,7 @@ def init_tweet_peak(debug):
     if games is None:
         return
     message = create_message_peak_of_the_day(games)
+    # sort games by peak
     games = sorted(
         games.items(), key=lambda x: x[1]['peak_players'], reverse=True)
     games = dict(games)

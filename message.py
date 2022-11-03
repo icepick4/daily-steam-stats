@@ -112,7 +112,7 @@ def cut_message(message):
     while messages != []:
         message = ''
         # cut messages into 280 characters messages
-        while len(message) + len(messages[0]) < 270:
+        while len(message) + len(messages[0]) < 265:
             message += messages[0] + '\n'
             messages.pop(0)
             if messages == []:

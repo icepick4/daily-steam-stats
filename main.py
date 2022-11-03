@@ -22,14 +22,19 @@ def main(manual, debug):
             init_tweet_peak(debug)
     else:
         while True:
+            # if it's between 7am and 10pm tweet the peak of the day
             if 19 <= time.localtime().tm_hour <= 21:
                 init_tweet_peak(debug)
-                # tweet every 2 hours
+                print('Tweeted the peak of the day')
+            # tweet every 2 hours
             init_tweet_trending(debug)
+            print('Tweeted trending games')
             time.sleep(60 * 5)
             init_tweet_top(debug)
-            print('Waiting for next tweet...')
+            print('Tweeted top games')
+            print('Waiting for next tweets... in 2 hours')
             time.sleep(60 * 60 * 2)
+    print('See the tweets on : https://twitter.com/DailySteamStats ')
 
 
 if __name__ == '__main__':
