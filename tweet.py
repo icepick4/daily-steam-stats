@@ -1,4 +1,5 @@
 """tweet a text and an image"""
+
 import os
 import shutil
 import sys
@@ -70,7 +71,7 @@ def init_tweet_trending(debug):
     if games is None:
         return
     message = create_message_trending_games(games)
-    global_init(games, message, debug)
+    global_init(games, message, 'trending', debug)
 
 
 def init_tweet_peak(debug):
@@ -79,7 +80,10 @@ def init_tweet_peak(debug):
     if games is None:
         return
     message = create_message_peak_of_the_day(games)
-    global_init(games, message, debug)
+    games = sorted(
+        games.items(), key=lambda x: x[1]['peak_players'], reverse=True)
+    games = dict(games)
+    global_init(games, message, 'peak', debug)
 
 
 def init_tweet_top(debug):
@@ -88,17 +92,17 @@ def init_tweet_top(debug):
     if games is None:
         return
     message = create_message_top_games(games)
-    global_init(games, message, debug)
+    global_init(games, message, 'top', debug)
 
 
-def global_init(games, message, debug):
+def global_init(games, message, type, debug):
     """initiate tweet"""
     images = [item[1]['image'] for item in games.items()]
     images = images[:4]
     main_message = message[0]
     links = [item[1]['steam_link'] for item in games.items()]
     links = create_links_message(links, message[1])
-    reply = create_reply_message(message[1], 'top')[0]
+    reply = create_reply_message(message[1], type)[0]
     tweet([cut_message(main_message), cut_message(
         links), cut_message(reply)], images, debug)
 

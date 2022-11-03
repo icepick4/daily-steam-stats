@@ -30,8 +30,8 @@ def create_message_peak_of_the_day(games):
     sorted_games = sorted(
         games.items(), key=lambda x: x[1]['peak_players'], reverse=True)
     sorted_games = dict(sorted_games)
-    for item in sorted_games.items():
-        rank = get_rank(item[1]['rank'])
+    for i, item in enumerate(sorted_games.items()):
+        rank = get_rank(i+1)
         games_names.append(item[0])
         peak_players = item[1]['peak_players']
         message += (
