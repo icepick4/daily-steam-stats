@@ -3,7 +3,6 @@
 import os
 import shutil
 import sys
-import time
 from pathlib import Path
 
 import requests
@@ -63,8 +62,6 @@ def tweet(messages, images, debug=False):
             if not debug:
                 response = api.update_status(
                     status=msg, in_reply_to_status_id=response.id)
-                # waiting for the tweet to be posted
-                time.sleep(5)
                 try:
                     api.create_favorite(response.id)
                 except tweepy.errors.NotFound:

@@ -2,6 +2,7 @@
 import random
 
 import pyshorteners
+import requests
 
 from constants import (CHART_INCREASING, DOWN_ARROW, END_MESSAGE, GLOB,
                        HASHTAGS, NUMBERS, PERSON, REPLY_MESSAGE_PEAK,
@@ -69,7 +70,10 @@ def create_links_message(links, games):
     """Create a message to display links of games"""
     message = f'Links of the #games in the #leaderboard #today {TROPHY}{VIDEO_GAME}\n\n'
     for i, link in enumerate(links):
-        link = pyshorteners.Shortener().tinyurl.short(link)
+        try:
+            link = pyshorteners.Shortener().tinyurl.short(link)
+        except requests.exceptions.ReadTimeout:
+            pass
         line = f'{games[i]} {RIGHT_ARROW} {link} {SHOPPING_CART}\n'
         message += line
     message += '\n'
