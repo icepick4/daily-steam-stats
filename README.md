@@ -35,19 +35,16 @@ pip install -r requirements.txt
 To use the scripts on your own, you must create a config.py file including your API keys. 
 It claims that you already have a dev twitter account. If it's not the case, you will need one.
 
-To post top games, use this in main.py
-```python
-# Pass True in arg to enter debug mode and avoid tweeting for real
-
-init_tweet_top(False)
+You have three ways to use the script :
+```sh
+python3 main.py --manual
+# post manually the tweets
+python3 main.py --debug
+# run the script without tweeting for real
+python3 main.py --auto
+# post every 2 hours automatically
 ```
 
-To post trending games, use this in main.py
-```python
-# Pass True in arg to enter debug mode and avoid tweeting for real
-
-init_tweet_trending(False)
-```
 If you have any advice or any new feature idea just tell me !
 Or simply fork this project and send me a pull request !
 
