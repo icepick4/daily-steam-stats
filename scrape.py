@@ -35,8 +35,13 @@ def get_games(trending):
         name = name.replace('\t', '')
         name = name.replace('\n', '')
         rank = ctr + 1
-        steam_link = get_steam_link('https://steamcharts.com' +
-                                    game.select('a')[0]['href'])
+        print(f'Getting data for {name}...')
+        try:
+            steam_link = get_steam_link('https://steamcharts.com' +
+                                        game.select('a')[0]['href'])
+        except IndexError:
+            print('Could not get the steam link.')
+            steam_link = 'https://example.com'
         image = get_image(steam_link)
         if trending:
             current_players = game.select('td')[3].text
@@ -76,7 +81,7 @@ def get_steam_link(image_page):
         print('HTTP error')
         sys.exit()
     image_soup = BeautifulSoup(image_page, 'html.parser')
-    return image_soup.select('div#app-links a')[0]['href']
+    return image_soup.select('#app-links a')[0]['href']
 
 
 def get_image(steam_link):
