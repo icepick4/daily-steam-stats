@@ -11,7 +11,7 @@
 
 This Twitter bot posts every day some tweets about trending games on steam.
 You can take a look at it right [here](https://www.twitter.com/dailysteamstats)
-
+Currently the bot is in auto mode, take a look just below in [Usages](#usages)
 ## Dependencies
 
 The bot depends on the following modules :
@@ -26,7 +26,7 @@ You can skip pyshorteners and emoji (it's a bonus for the bot)
 
 Install them with the following command :
 
-```
+```console
 pip install -r requirements.txt
 ```
 
@@ -36,14 +36,18 @@ To use the scripts on your own, you must create a config.py file including your 
 It claims that you already have a dev twitter account. If it's not the case, you will need one.
 
 You have three ways to use the script :
-```sh
-python3 main.py --manual
+```console
 # post manually the tweets
-python3 main.py --debug
+python3 main.py --manual
 # run the script without tweeting for real
-python3 main.py --auto
+python3 main.py --debug
 # post every 2 hours automatically
+python3 main.py --auto
 ```
+
+- In auto mode, every two hours, the bot tweets trending games, then most played games, and once a day the peak games of the day.
+- In manual mode you can choose which tweet you want.
+- With debug mode you disable tweeting for real.
 
 If you have any advice or any new feature idea just tell me !
 Or simply fork this project and send me a pull request !
