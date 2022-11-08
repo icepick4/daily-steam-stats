@@ -66,6 +66,8 @@ def tweet(messages, images, debug=False):
                     api.create_favorite(response.id)
                 except tweepy.errors.NotFound:
                     print('Could not favorite the tweet.')
+                except tweepy.errors.Forbidden:
+                    print('Could not favorite the tweet.')
 
 
 def init_tweet_trending(debug):

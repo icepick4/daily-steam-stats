@@ -21,6 +21,7 @@ def main(manual, debug):
         if response != 's':
             init_tweet_peak(debug)
     else:
+        print('Starting tweeting !')
         while True:
             # if it's between 7am and 10pm tweet the peak of the day
             if 19 <= time.localtime().tm_hour <= 21:

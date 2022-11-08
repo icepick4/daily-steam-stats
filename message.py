@@ -1,4 +1,6 @@
 """create a message for a tweet"""
+
+import contextlib
 import random
 
 import pyshorteners
@@ -70,10 +72,8 @@ def create_links_message(links, games):
     """Create a message to display links of games"""
     message = f'Links of the #games in the #leaderboard #today {TROPHY}{VIDEO_GAME}\n\n'
     for i, link in enumerate(links):
-        try:
+        with contextlib.suppress(requests.exceptions.ReadTimeout):
             link = pyshorteners.Shortener().tinyurl.short(link)
-        except requests.exceptions.ReadTimeout:
-            pass
         line = f'{games[i]} {RIGHT_ARROW} {link} {SHOPPING_CART}\n'
         message += line
     message += '\n'
