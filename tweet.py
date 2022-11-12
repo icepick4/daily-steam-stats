@@ -1,6 +1,7 @@
 """tweet a text and an image"""
 
 import os
+import random
 import shutil
 import sys
 from pathlib import Path
@@ -15,10 +16,11 @@ try:
 except ImportError:
     print('Please create a config.py file with your Twitter API keys.')
     sys.exit()
-from message import (create_links_message, create_message_peak_of_the_day,
-                     create_message_top_games, create_message_trending_games,
-                     create_reply_message, cut_message)
-from scrape import get_games
+from message import (create_links_message, create_message_game_focus,
+                     create_message_peak_of_the_day, create_message_top_games,
+                     create_message_trending_games, create_reply_message,
+                     cut_message)
+from scrape import get_game, get_games
 
 try:
     auth = tweepy.OAuthHandler(config.API_KEY, config.API_KEY_SECRET)
@@ -75,8 +77,21 @@ def init_tweet_trending(debug):
     games = get_games(True)
     if games is None:
         return
+    init_single_game_tweet(games, debug)
     message = create_message_trending_games(games)
     global_init(games, message, 'trending', debug)
+
+
+def init_single_game_tweet(games, debug):
+    """initiate tweet"""
+    if random.randint(0, 4) == 0:
+        # get game_id of random game in games
+        game_id = random.choice(list(games.keys()))
+        game_id = games[game_id]['game_id']
+        game = get_game(game_id)
+        message = create_message_game_focus(game)
+        images = [game['image']]
+        tweet([cut_message(message)], images, debug)
 
 
 def init_tweet_peak(debug):
@@ -97,6 +112,8 @@ def init_tweet_top(debug):
     games = get_games(False)
     if games is None:
         return
+    if random.randint(0, 10) == 0:
+        init_single_game_tweet(games, debug)
     message = create_message_top_games(games)
     global_init(games, message, 'top', debug)
 

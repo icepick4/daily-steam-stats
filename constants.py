@@ -1,7 +1,7 @@
 """constants"""
 import emoji
 
-URL = 'https://steamcharts.com/'
+URL = 'https://steamcharts.com'
 
 HASHTAGS = ['#SteamTop', '#Gaming', '#Trending',
             '#SteamCharts', '#Stats', '#VideoGames',
@@ -27,6 +27,7 @@ HASHTAGS = ['#SteamTop', '#Gaming', '#Trending',
 LOGO_IMAGE = 'https://raw.githubusercontent.com/icepick4/daily-steam-stats/main/steam-logo.png'
 
 CHART_INCREASING = emoji.emojize(':chart_increasing:')
+CHART_DECREASING = emoji.emojize(':chart_decreasing:')
 TROPHY = emoji.emojize(':trophy:')
 NUMBERS = [emoji.emojize(f':keycap_{i}:') for i in range(11)]
 DOWN_ARROW = emoji.emojize(':down_arrow:')
@@ -37,6 +38,7 @@ SHOPPING_CART = emoji.emojize(':shopping_cart:')
 GLOB = emoji.emojize(':globe_with_meridians:')
 VIDEO_GAME = emoji.emojize(':video_game:')
 SPARKLES = emoji.emojize(':sparkles:')
+FIRE = emoji.emojize(':fire:')
 
 REPLY_MESSAGE_TRENDING = '#Games are ranked by their #evolution in the lasts '\
     f'24 hours. {CHART_INCREASING}{TROPHY}\n\n'
@@ -44,6 +46,7 @@ REPLY_MESSAGE_TOP = '#Games are ranked by the number of #players on #Steam '\
     f'currently. {PERSON}{TROPHY}\n\n'
 REPLY_MESSAGE_PEAK = '#Games are ranked by the #peak number of #players on #Steam today'\
     f'. {PERSON}{TROPHY}\n\n'
+REPLY_MESSAGE_FOCUS = ''
 
 END_MESSAGE = f'See the leaderbord {UP_ARROW}'
 IDEAS_MESSAGE = f'If you have ideas to improve the tweets let me know!{SPARKLES}'
