@@ -6,16 +6,17 @@ import random
 import pyshorteners
 import requests
 
-from constants import (CHART_DECREASING, CHART_INCREASING, DOWN_ARROW,
-                       END_MESSAGE, FIRE, GLOB, HASHTAGS, NUMBERS, PERSON,
-                       REPLY_MESSAGE_FOCUS, REPLY_MESSAGE_PEAK,
-                       REPLY_MESSAGE_TOP, REPLY_MESSAGE_TRENDING, RIGHT_ARROW,
-                       SHOPPING_CART, TROPHY, VIDEO_GAME)
+from constants import (BAR_CHART, CHART_DECREASING, CHART_INCREASING,
+                       DOWN_ARROW, END_MESSAGE, FIRE, GLOBE, HASHTAGS, NUMBERS,
+                       PAGE_FACE_UP, PERSON, REPLY_MESSAGE_FOCUS,
+                       REPLY_MESSAGE_PEAK, REPLY_MESSAGE_TOP,
+                       REPLY_MESSAGE_TRENDING, RIGHT_ARROW, SHOPPING_CART,
+                       TROPHY, VIDEO_GAME)
 
 
 def create_message_top_games(games):
     """Create a message for a tweet."""
-    message = f'Top 10 most played #games on #Steam currently {TROPHY}{GLOB}\n\n'
+    message = f'Top 10 most played #games on #Steam currently {TROPHY}{GLOBE}\n\n'
     games_names = []
     for item in games.items():
         rank = get_rank(item[1]['rank'])
@@ -29,7 +30,7 @@ def create_message_top_games(games):
 
 def create_message_peak_of_the_day(games):
     """Create a message for a tweet."""
-    message = f'Peak of players today on #Steam !{GLOB}{TROPHY}\n\n'
+    message = f'Peak of players today on #Steam !{GLOBE}{TROPHY}\n\n'
     games_names = []
     sorted_games = sorted(
         games.items(), key=lambda x: x[1]['peak_players'], reverse=True)
@@ -62,17 +63,20 @@ def create_message_trending_games(games):
 
 def create_message_game_focus(game):
     """Create a message for a tweet."""
-    message = f'Focus on {game["name"]} over the last month {VIDEO_GAME}\n'
+    message = f'Focus on {game["name"]} over the last month {VIDEO_GAME}{BAR_CHART}\n'
     message += '#' + \
         ''.join(e for e in game['name'] if e.isalnum()) + ' #Steam\n\n'
     message += f'Peak of players : {game["peak_players"]} {PERSON}{FIRE}\n'
-    message += f'The average number of players : {int(float(game["avg_players"]))} {PERSON}\n'
+    message += f'The average number of players : {int(float(game["avg_players"]))}'\
+        f'{PERSON}{GLOBE}\n'
     if game['gain'].startswith('+'):
-        message += f'Evolution gain compared with the last month : {game["gain"]} {CHART_INCREASING}\n'
+        message += f'Evolution gain compared with the last month : {game["gain"]} '\
+            f'{CHART_INCREASING}\n'
     else:
-        message += f'Evolution loss compared with the last month : {game["gain"]} {CHART_DECREASING}\n'
+        message += f'Evolution loss compared with the last month : {game["gain"]} '\
+            f'{CHART_DECREASING}\n'
     if game['description'] != 'No description available.':
-        message += 'Description : '
+        message += f'Description {PAGE_FACE_UP}\n'
         for text in game['description']:
             message += f'{text} '
             if text.endswith('.') or text.endswith('!') or text.endswith('?'):
@@ -98,7 +102,8 @@ def create_reply_message(games, tweet_type):
 
 def create_links_message(links, games):
     """Create a message to display links of games"""
-    message = f'Links of the #games in the #leaderboard #today {TROPHY}{VIDEO_GAME}\n\n'
+    message = f'Links of the #games in the #leaderboard #today '\
+        f'{TROPHY}{VIDEO_GAME}\n\n'
     for i, link in enumerate(links):
         with contextlib.suppress(requests.exceptions.ReadTimeout):
             link = pyshorteners.Shortener().tinyurl.short(link)

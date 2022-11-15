@@ -22,7 +22,15 @@ HASHTAGS = ['#SteamTop', '#Gaming', '#Trending',
             '#gameplay', '#developer', '#developers', '#developercommunity',
             '#developercommunitygames', '#gameDev', '#gameDevs',
             '#gameDevCommunity', '#gameDevCommunityGames',
-            '#gameDevCommunityGifts']
+            '#gameDevCommunityGifts',
+            '#Dev', '#Devs', '#DevCommunity', '#DevCommunityGames',
+            '#Python', '#PythonProgramming', '#PythonProgrammer',
+            '#PythonProgrammers', '#PythonProgrammerCommunity',
+            '#Tweepy', '#TweepyCommunity', '#TweepyCommunityGames',
+            '#Programming', '#Programmer', '#Programmers',
+            '#ProgrammerCommunity', '#ProgrammerCommunityGames',
+            '#Developer', '#Developers', '#DeveloperCommunity',
+            '#GitHub', '#GitHubCommunity', '#GitHubCommunityGames']
 
 LOGO_IMAGE = 'https://raw.githubusercontent.com/icepick4/daily-steam-stats/main/steam-logo.png'
 
@@ -35,10 +43,12 @@ RIGHT_ARROW = emoji.emojize(':right_arrow:')
 UP_ARROW = emoji.emojize(':up_arrow:')
 PERSON = emoji.emojize(':person_frowning:')
 SHOPPING_CART = emoji.emojize(':shopping_cart:')
-GLOB = emoji.emojize(':globe_with_meridians:')
+GLOBE = emoji.emojize(':globe_with_meridians:')
 VIDEO_GAME = emoji.emojize(':video_game:')
 SPARKLES = emoji.emojize(':sparkles:')
 FIRE = emoji.emojize(':fire:')
+BAR_CHART = emoji.emojize(':bar_chart:')
+PAGE_FACE_UP = emoji.emojize(':page_facing_up:')
 
 REPLY_MESSAGE_TRENDING = '#Games are ranked by their #evolution in the lasts '\
     f'24 hours. {CHART_INCREASING}{TROPHY}\n\n'
@@ -46,7 +56,8 @@ REPLY_MESSAGE_TOP = '#Games are ranked by the number of #players on #Steam '\
     f'currently. {PERSON}{TROPHY}\n\n'
 REPLY_MESSAGE_PEAK = '#Games are ranked by the #peak number of #players on #Steam today'\
     f'. {PERSON}{TROPHY}\n\n'
-REPLY_MESSAGE_FOCUS = ''
+REPLY_MESSAGE_FOCUS = 'Those stats are based on the last month of data. '\
+    f'{GLOBE}{VIDEO_GAME}\n\n'
 
 END_MESSAGE = f'See the leaderbord {UP_ARROW}'
 IDEAS_MESSAGE = f'If you have ideas to improve the tweets let me know!{SPARKLES}'

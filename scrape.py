@@ -70,6 +70,7 @@ def get_games(trending):
 
 
 def get_game(game_id):
+    """Get the infos of a game."""
     try:
         page = requests.get(f'{URL}{game_id}', headers={
                             'User-Agent': 'Mozilla/5.0'}, timeout=15).content
@@ -98,7 +99,14 @@ def get_game(game_id):
     image = get_infos_with_steam(steam_link, 'image')
     description = get_infos_with_steam(steam_link, 'description')
     description = description.split(' ')
-    return {'avg_players': avg_players, 'gain': gain, 'peak_players': peak_players, 'steam_link': steam_link, 'image': image, 'name': name, 'description': description}
+    return {'avg_players': avg_players,
+            'gain': gain,
+            'peak_players': peak_players,
+            'steam_link': steam_link,
+            'image': image,
+            'name': name,
+            'description': description
+            }
 
 
 def get_steam_link(image_page):
