@@ -7,11 +7,11 @@ import pyshorteners
 import requests
 
 from constants import (BAR_CHART, CHART_DECREASING, CHART_INCREASING,
-                       DOWN_ARROW, END_MESSAGE, FIRE, GLOBE, HASHTAGS, NUMBERS,
-                       PAGE_FACE_UP, PERSON, REPLY_MESSAGE_FOCUS,
-                       REPLY_MESSAGE_PEAK, REPLY_MESSAGE_TOP,
-                       REPLY_MESSAGE_TRENDING, RIGHT_ARROW, SHOPPING_CART,
-                       TROPHY, VIDEO_GAME)
+                       DOWN_ARROW, END_MESSAGE, FIRE, GITHUB_LINK, GLOBE,
+                       HASHTAGS, NUMBERS, PAGE_FACE_UP, PERSON,
+                       REPLY_MESSAGE_FOCUS, REPLY_MESSAGE_PEAK,
+                       REPLY_MESSAGE_TOP, REPLY_MESSAGE_TRENDING, RIGHT_ARROW,
+                       SHOPPING_CART, TROPHY, VIDEO_GAME)
 
 
 def create_message_top_games(games):
@@ -76,7 +76,7 @@ def create_message_game_focus(game):
         message += f'Evolution loss compared with the last month : {game["gain"]} '\
             f'{CHART_DECREASING}\n'
     if game['description'] != 'No description available.':
-        message += f'Description {PAGE_FACE_UP}\n'
+        message += f'Description {PAGE_FACE_UP} : \n'
         for text in game['description']:
             message += f'{text} '
             if text.endswith('.') or text.endswith('!') or text.endswith('?'):
@@ -151,7 +151,7 @@ def cut_message(message):
         if len(messages[0]) > 250:
             messages[0] = f'{messages[0][:250]}...'
         # cut messages into 280 characters messages
-        while len(message) + len(messages[0]) < 260:
+        while len(message) + len(messages[0]) < 240:
             message += messages[0] + '\n'
             messages.pop(0)
             if messages == []:
@@ -159,7 +159,7 @@ def cut_message(message):
         with contextlib.suppress(IndexError):
             if message[-2] != '\n':
                 message += '\n'
-        message += DOWN_ARROW
+        message += GITHUB_LINK + ' ' + DOWN_ARROW
         final_messages.append(message)
     # final messages contains messages cut into 280 characters
     return final_messages

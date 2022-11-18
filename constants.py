@@ -60,4 +60,5 @@ REPLY_MESSAGE_FOCUS = 'Those stats are based on the last month of data. '\
     f'{GLOBE}{VIDEO_GAME}\n\n'
 
 END_MESSAGE = f'See the leaderbord {UP_ARROW}'
-IDEAS_MESSAGE = f'If you have ideas to improve the tweets let me know!{SPARKLES}'
+IDEAS_MESSAGE = f'\n\nIf you have ideas to improve the tweets let me know!{SPARKLES}'
+GITHUB_LINK = 'github.com/icepick4'
