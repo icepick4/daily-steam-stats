@@ -30,6 +30,8 @@ Install them with the following command :
 pip install -r requirements.txt
 ```
 
+Datas are scraped from www.steamcharts.com
+
 ## Usages 
 
 To use the scripts on your own, you must create a config.py file including your API keys. 
