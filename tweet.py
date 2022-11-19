@@ -84,7 +84,7 @@ def init_tweet_trending(debug):
 
 def init_single_game_tweet(games, debug):
     """initiate tweet"""
-    if random.randint(0, 4) == 0:
+    if random.randint(0, 2) == 0:
         # get game_id of random game in games
         game_id = random.choice(list(games.keys()))
         game_id = games[game_id]['game_id']
@@ -112,7 +112,7 @@ def init_tweet_top(debug):
     games = get_games(False)
     if games is None:
         return
-    if random.randint(0, 10) == 0:
+    if random.randint(0, 2) == 0:
         init_single_game_tweet(games, debug)
     message = create_message_top_games(games)
     global_init(games, message, 'top', debug)
