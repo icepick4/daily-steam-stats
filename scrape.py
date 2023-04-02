@@ -3,7 +3,6 @@ import sys
 
 import requests
 from bs4 import BeautifulSoup
-
 from constants import LOGO_IMAGE, URL
 
 
@@ -11,7 +10,7 @@ def get_games(trending):
     """Get the trending games from the Steam store."""
     try:
         page = requests.get(URL, headers={
-                            'User-Agent': 'Mozilla/5.0'}, timeout=15).content
+                            'User-Agent': 'Mozilla/5.0'}, timeout=120).content
     except requests.exceptions.Timeout:
         print('Timeout error')
         sys.exit()
@@ -73,7 +72,7 @@ def get_game(game_id):
     """Get the infos of a game."""
     try:
         page = requests.get(f'{URL}{game_id}', headers={
-                            'User-Agent': 'Mozilla/5.0'}, timeout=15).content
+                            'User-Agent': 'Mozilla/5.0'}, timeout=120).content
     except requests.exceptions.Timeout:
         print('Timeout error')
         sys.exit()
@@ -113,7 +112,7 @@ def get_steam_link(image_page):
     """Get the steam link of a game."""
     try:
         image_page = requests.get(
-            image_page, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15).content
+            image_page, headers={'User-Agent': 'Mozilla/5.0'}, timeout=120).content
     except requests.exceptions.Timeout:
         print('Timeout error')
         sys.exit()
@@ -131,7 +130,7 @@ def get_infos_with_steam(steam_link, scraping):
     """Get the infos of a game."""
     try:
         steam_soup = BeautifulSoup(requests.get(
-            steam_link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=15).content, 'html.parser')
+            steam_link, headers={'User-Agent': 'Mozilla/5.0'}, timeout=120).content, 'html.parser')
     except requests.exceptions.Timeout:
         print('Timeout error')
         sys.exit()

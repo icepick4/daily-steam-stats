@@ -21,22 +21,26 @@ def main(manual, debug):
         if response != 's':
             init_tweet_peak(debug)
     else:
-        print('Starting tweeting !')
+        print('Starting tweeting ! (new version with try/catch')
         counter = 0
         while True:
-            # if it's between 7am and 10pm tweet the peak of the day
-            if 19 <= time.localtime().tm_hour <= 21:
-                init_tweet_peak(debug)
-                print('Tweeted the peak of the day')
-            # tweet every 2 hours
-            init_tweet_trending(debug)
-            print('Tweeted trending games')
-            time.sleep(60 * 5)
-            init_tweet_top(debug)
-            print('Tweeted top games')
-            print('Waiting for next tweets... in 2 hours')
-            time.sleep(60 * 60 * 2)
-            counter += 1
+            try:
+                # if it's between 7am and 10pm tweet the peak of the day
+                if 19 <= time.localtime().tm_hour <= 21:
+                    init_tweet_peak(debug)
+                    print('Tweeted the peak of the day')
+                # tweet every 2 hours
+                init_tweet_trending(debug)
+                print('Tweeted trending games')
+                time.sleep(60 * 5)
+                init_tweet_top(debug)
+                print('Tweeted top games')
+                print('Waiting for next tweets... in 2 hours')
+                time.sleep(60 * 60 * 4)
+                counter += 1
+            except Exception:
+                print('Error, waiting 30 minutes')
+                time.sleep(60 * 30)
     print('See the tweets on : https://twitter.com/DailySteamStats ')
 
 
